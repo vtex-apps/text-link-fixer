@@ -1,9 +1,9 @@
 {
-  "name": "events-example",
+  "name": "text-link-fixer",
   "vendor": "vtex",
   "version": "0.0.1",
-  "title": "Events Example",
-  "description": "Reference app for VTEX IO Services",
+  "title": "Text Link Fixer",
+  "description": "Parser when a text-link in a product contains spaces",
   "dependencies": {},
   "builders": {
     "node": "6.x",

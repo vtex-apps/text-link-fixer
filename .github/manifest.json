@@ -9,9 +9,6 @@
     "node": "6.x",
     "docs": "0.x"
   },
-  "scripts": {
-    "prereleasy": "bash lint.sh"
-  },
   "credentialType": "absolute",
   "policies": [
     {

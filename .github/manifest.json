@@ -3,7 +3,7 @@
   "vendor": "vtex",
   "version": "0.0.1",
   "title": "Text Link Fixer",
-  "description": "Parser when a text-link in a product contains spaces",
+  "description": "Parser when a text-link in a product contains spaces.",
   "dependencies": {},
   "builders": {
     "node": "6.x",

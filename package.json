@@ -1,5 +1,5 @@
 {
-  "name": "text-link-fixer",
+  "name": "test-link-fixer",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -26,7 +26,7 @@
     "@vtex/danger": "^0.2.7",
     "eslint": "^6.8.0",
     "eslint-config-vtex": "^12.7.0",
-    "husky": "^4.3.0",
+    "husky": "^4.2.0",
     "lint-staged": "^10.0.2",
     "prettier": "^2.0.5",
     "typescript": "^3.9.6"

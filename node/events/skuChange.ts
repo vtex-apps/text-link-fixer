@@ -1,12 +1,10 @@
 import type { EventContext } from '@vtex/api'
 import { LogLevel, NotFoundError, ResolverError } from '@vtex/api'
+
 import { clearString } from '../utils/clearString'
-
-
 import type { Clients } from '../clients'
 
 export async function skuChange(ctx: EventContext<Clients>) {
-
   const {
     clients: { catalog: catalogClient },
   } = ctx
@@ -15,36 +13,19 @@ export async function skuChange(ctx: EventContext<Clients>) {
 
   if (!HasStockKeepingUnitModified) return
 
-  let sku, product
+  let sku
+  let product
+  let newTextLink
+  let productId
 
   try {
     sku = await catalogClient.getSku(IdSku)
 
-    const productId = sku.ProductId
+    productId = sku.ProductId
+
     product = await catalogClient.getProduct(productId)
 
-    const newTextLink = clearString(product.LinkId)
-    try {
-      await catalogClient.updateProduct(
-        {
-          Name: product.Name,
-          CategoryId: product.CategoryId,
-          BrandId: product.BrandId,
-          LinkId: newTextLink
-        },
-        productId
-      )
-    } catch (error) {
-      const erroMessage = `Product ${productId} cannot be updated.`
-      const splunkError = {
-        error: erroMessage,
-        detail: error,
-      }
-
-      ctx.vtex.logger.log(splunkError, LogLevel.Error)
-      throw new ResolverError(erroMessage)
-    }
-
+    newTextLink = clearString(product.LinkId)
   } catch (error) {
     const erroMessage = `SKU ${IdSku} not found.`
     const splunkError = {
@@ -54,6 +35,26 @@ export async function skuChange(ctx: EventContext<Clients>) {
 
     ctx.vtex.logger.log(splunkError, LogLevel.Error)
     throw new NotFoundError(erroMessage)
+  }
+
+  try {
+    const bodyPayload = {
+      Name: product.Name,
+      CategoryId: product.CategoryId,
+      BrandId: product.BrandId,
+      LinkId: newTextLink,
+    }
+
+    await catalogClient.updateProduct(bodyPayload, productId)
+  } catch (error) {
+    const erroMessage = `Product ${productId} cannot be updated.`
+    const splunkError = {
+      error: erroMessage,
+      detail: error,
+    }
+
+    ctx.vtex.logger.log(splunkError, LogLevel.Error)
+    throw new ResolverError(erroMessage)
   }
 
   return true

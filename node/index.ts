@@ -3,7 +3,7 @@ import type {
   ParamsContext,
   ServiceContext,
   RecorderState,
-  ClientsConfig
+  ClientsConfig,
 } from '@vtex/api'
 import { Service } from '@vtex/api'
 

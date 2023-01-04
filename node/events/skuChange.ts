@@ -25,6 +25,8 @@ export async function skuChange(ctx: EventContext<Clients>) {
 
     product = await catalogClient.getProduct(productId)
 
+    if (!/\s/.test(product.LinkId)) return
+
     newTextLink = clearString(product.LinkId)
   } catch (error) {
     const erroMessage = `SKU ${IdSku} not found.`
